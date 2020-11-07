@@ -1,4 +1,4 @@
-import colors from "../constants/colors";
+import colors from "../constants/Colors";
 import styled from "styled-components";
 import { Text, Strong } from "evergreen-ui";
 
@@ -23,12 +23,12 @@ const HeaderContainer = styled.header`
   left: 0;
   right: 0;
   top: 0;
-`
+`;
 
 const NavBar = styled.div`
   width: 90%;
   max-width: 800px;
   margin: 20px auto;
-`
+`;
 
 export default Header;
