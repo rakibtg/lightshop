@@ -1,4 +1,5 @@
-import { createStore, combineReducers } from "redux";
+import ReduxThunk from "redux-thunk";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 
 import Schema from "./Schema";
 import {
@@ -15,4 +16,8 @@ const reducers = combineReducers({
   productView: productViewReducer,
 });
 
-export default createStore((state, action) => reducers(state, action), Schema);
+export default createStore(
+  (state, action) => reducers(state, action),
+  Schema,
+  applyMiddleware(ReduxThunk)
+);
