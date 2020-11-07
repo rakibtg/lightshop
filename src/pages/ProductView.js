@@ -1,22 +1,27 @@
 import { Pane, Text } from "evergreen-ui";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { setProductViewData } from "../store/Actions";
+import { useSelector, shallowEqual, useDispatch } from "react-redux";
+import { setProductViewData, resetProductViewData } from "../store/Actions";
+
 import DataCell from "../components/DataCell";
 import ProductOptions from "../components/ProductOptions";
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
 
 const ProductView = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { product, selections } = useSelector(
-    (state) => state.productView,
+  const product = useSelector(
+    (state) => state.productView.product,
     shallowEqual
   );
 
   useEffect(() => {
     dispatch(setProductViewData(id));
+
+    return () => {
+      dispatch(resetProductViewData());
+    };
   }, [id, dispatch]);
 
   if (product) {
@@ -32,7 +37,6 @@ const ProductView = () => {
         <Pane flexGrow={1}>
           <ProductOptions options={product.options} />
         </Pane>
-        <pre>{JSON.stringify(selections, null, 4)}</pre>
       </Pane>
     );
   } else {
