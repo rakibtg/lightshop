@@ -32,3 +32,19 @@ export const setProductViewSelectedOptions = (selections) => ({
     selections,
   },
 });
+
+export const resetProductViewData = () => ({
+  type: "RESET_PRODUCT_VIEW_DATA",
+});
+
+export const setActiveProductRequirements = (option) => {
+  return (dispatch) => {
+    const nextOption = {};
+    Object.keys(option).forEach((property) => {
+      const value = option[property];
+      nextOption[property] =
+        typeof value === "object" && value.length ? value[0] : value;
+    });
+    dispatch(setProductViewSelectedOptions(nextOption));
+  };
+};

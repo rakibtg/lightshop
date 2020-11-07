@@ -18,18 +18,22 @@ export const CartSchema = (cart) => {
   };
 };
 
+export const ProductViewSelections = () => {
+  return {
+    color: null,
+    storage: null,
+    power: null,
+    quantity: null,
+  };
+};
+
 const Schema = {
   title: "Light Shop",
   products: [],
   cart: [],
   productView: {
     product: null,
-    selections: {
-      color: null,
-      storage: null,
-      power: null,
-      quantity: null,
-    },
+    selections: ProductViewSelections(),
   },
 };
 

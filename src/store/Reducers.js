@@ -1,3 +1,4 @@
+import { ProductViewSelections } from "../store/Schema";
 import DataService from "../services/DataService";
 import BrowserService from "../services/BrowserService";
 
@@ -31,6 +32,11 @@ export const productViewReducer = (state = null, action) => {
         ...state.selections,
         ...selections,
       },
+    };
+  } else if (action.type === "RESET_PRODUCT_VIEW_DATA") {
+    return {
+      product: null,
+      selections: ProductViewSelections(),
     };
   }
 
