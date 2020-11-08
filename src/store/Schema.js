@@ -34,6 +34,7 @@ const Schema = {
   productView: {
     product: null,
     selections: ProductViewSelections(),
+    selectedOption: null,
   },
 };
 

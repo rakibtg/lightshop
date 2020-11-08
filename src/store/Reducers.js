@@ -23,7 +23,7 @@ export const cartReducer = (state = null, action) => {
   return state;
 };
 
-export const productViewReducer = (state = null, action) => {
+export const productViewReducer = (state = {}, action) => {
   if (action.type === "SET_PRODUCT_VIEW_DATA") {
     const { product = null, selections = {} } = action.payload;
     return {
@@ -32,11 +32,19 @@ export const productViewReducer = (state = null, action) => {
         ...state.selections,
         ...selections,
       },
+      selectedOption: state.selectedOption || null,
     };
   } else if (action.type === "RESET_PRODUCT_VIEW_DATA") {
     return {
       product: null,
       selections: ProductViewSelections(),
+      selectedOption: null,
+    };
+  } else if (action.type === "SET_SELECTED_OPTION") {
+    const { option } = action.payload;
+    return {
+      ...state,
+      selectedOption: option,
     };
   }
 

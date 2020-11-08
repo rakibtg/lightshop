@@ -1,8 +1,11 @@
 import { Pane, Text } from "evergreen-ui";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 
-import { setActiveProductRequirements } from "../store/Actions";
+import {
+  setSelectedOption,
+  setActiveProductRequirements,
+} from "../store/Actions";
 
 import ColorSelector from "./ColorSelector";
 import GenericOptionSelector from "./GenericOptionSelector";
@@ -10,9 +13,8 @@ import QuantitySelector from "./QuantitySelector";
 
 const ProductOptions = ({ options }) => {
   const dispatch = useDispatch();
-  const [selectedOption, setSelectedOption] = useState(null);
-  const selections = useSelector(
-    (state) => state.productView.selections,
+  const { selections, selectedOption } = useSelector(
+    (state) => state.productView,
     shallowEqual
   );
 
@@ -26,9 +28,9 @@ const ProductOptions = ({ options }) => {
           quantity: _option.quantity > 1 ? 1 : _option.quantity,
         })
       );
-      setSelectedOption(_option);
+      dispatch(setSelectedOption(_option));
     }
-  }, [selectedOption, setSelectedOption, options, dispatch]);
+  }, [selectedOption, options, dispatch]);
 
   if (!selectedOption) {
     return (
@@ -38,13 +40,9 @@ const ProductOptions = ({ options }) => {
     );
   }
   return (
-    <div>
-      <pre>{JSON.stringify({ selectedOption, selections }, null, 4)}</pre>
-      <ColorSelector
-        options={options}
-        setSelectedOption={setSelectedOption}
-        value={selections.color}
-      />
+    <Pane>
+      <ColorSelector options={options} value={selections.color} />
+
       {selectedOption.hasOwnProperty("power") && (
         <GenericOptionSelector
           label="Power"
@@ -53,6 +51,7 @@ const ProductOptions = ({ options }) => {
           value={selections.power}
         />
       )}
+
       {selectedOption.hasOwnProperty("storage") && (
         <GenericOptionSelector
           label="Storage"
@@ -60,13 +59,14 @@ const ProductOptions = ({ options }) => {
           value={selections.storage}
         />
       )}
+
       {selectedOption.hasOwnProperty("quantity") && (
         <QuantitySelector
           quantity={selectedOption.quantity}
           value={selections.quantity}
         />
       )}
-    </div>
+    </Pane>
   );
 };
 

@@ -3,9 +3,12 @@ import DataCell from "../components/DataCell";
 import upperFirst from "../helpers/upperFirst";
 import { useDispatch } from "react-redux";
 
-import { setActiveProductRequirements } from "../store/Actions";
+import {
+  setSelectedOption,
+  setActiveProductRequirements,
+} from "../store/Actions";
 
-const ColorSelector = ({ options, setSelectedOption, value }) => {
+const ColorSelector = ({ options, value }) => {
   const dispatch = useDispatch();
   const availableColors = options.map((op) => op.color);
   const handleOptionSelection = (event) => {
@@ -17,7 +20,7 @@ const ColorSelector = ({ options, setSelectedOption, value }) => {
         quantity: selectedOption.quantity > 1 ? 1 : selectedOption.quantity,
       })
     );
-    setSelectedOption(selectedOption);
+    dispatch(setSelectedOption(selectedOption));
   };
   return (
     <DataCell label="Color">

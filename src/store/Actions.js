@@ -48,3 +48,8 @@ export const setActiveProductRequirements = (option) => {
     dispatch(setProductViewSelectedOptions(nextOption));
   };
 };
+
+export const setSelectedOption = (option) => ({
+  type: "SET_SELECTED_OPTION",
+  payload: { option },
+});
