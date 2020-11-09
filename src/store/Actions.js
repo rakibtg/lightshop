@@ -11,17 +11,43 @@ export const getProducts = (payload) => ({
   payload,
 });
 
-export const setProductViewData = (id) => {
-  let { products } = store.getState();
+const getProductById = (id) => {
+  const { cart } = store.getState();
+  const products = DataService();
   const numericId = Number(id);
-  if (!products.length) {
-    products = DataService();
-  }
+  const product = products.find((p) => p.id === numericId);
+  const nextProduct = {
+    ...product,
+    options: product.options.map((option) => {
+      const cartItems = cart.items.filter(
+        (item) => item.productId === product.id && item.color === option.color
+      );
+      const syncedQuantity = cartItems.reduce((p, c) => p + c.quantity, 0);
+      return {
+        ...option,
+        quantity: Math.max(0, option.quantity - syncedQuantity),
+      };
+    }),
+  };
+  return nextProduct;
+};
 
+export const setProductViewData = (id) => {
+  const product = getProductById(id);
   return {
     type: "SET_PRODUCT_VIEW_DATA",
     payload: {
-      product: products.find((p) => p.id === numericId),
+      product,
+    },
+  };
+};
+
+export const updateProductViewData = (id) => {
+  const product = getProductById(id);
+  return {
+    type: "UPDATE_PRODUCT_VIEW_DATA",
+    payload: {
+      product,
     },
   };
 };
@@ -53,3 +79,10 @@ export const setSelectedOption = (option) => ({
   type: "SET_SELECTED_OPTION",
   payload: { option },
 });
+
+export const addToCart = (id, price, order) => {
+  return {
+    type: "ADD_TO_CART",
+    payload: { id, price, order },
+  };
+};

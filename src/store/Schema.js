@@ -20,17 +20,21 @@ export const CartSchema = (cart) => {
 
 export const ProductViewSelections = () => {
   return {
-    color: null,
-    storage: null,
-    power: null,
-    quantity: null,
+    color: undefined,
+    storage: undefined,
+    power: undefined,
+    quantity: undefined,
   };
 };
 
 const Schema = {
   title: "Light Shop",
   products: [],
-  cart: [],
+  cart: {
+    items: [],
+    count: 0,
+    subTotal: 0.0,
+  },
   productView: {
     product: null,
     selections: ProductViewSelections(),

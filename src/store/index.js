@@ -19,7 +19,8 @@ const reducers = combineReducers({
 const middlewares = [ReduxThunk];
 
 if (process.env.NODE_ENV === "development") {
-  const { logger } = require("redux-logger");
+  const { createLogger } = require("redux-logger");
+  const logger = createLogger({ collapsed: true });
   middlewares.push(logger);
 }
 export default createStore(
