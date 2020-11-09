@@ -1,20 +1,29 @@
-import Link from "../components/Link";
-import Colors from "../constants/Colors";
 import styled from "styled-components";
-import { Text, Strong } from "evergreen-ui";
+import { Pane, Text, Strong } from "evergreen-ui";
+
+import Colors from "../constants/Colors";
+import Link from "../components/Link";
+import CartButton from "./CartButton";
 
 const Header = () => {
   return (
     <HeaderContainer>
       <NavBar>
-        <Link to="/" textDecoration="none">
-          <Text size={600} color={Colors.tealBase} paddingRight={2}>
-            Light
-          </Text>
-          <Strong size={600} color={Colors.tealDark}>
-            Shop
-          </Strong>
-        </Link>
+        <Pane display="flex" alignItems="center">
+          <Pane flexGrow={1}>
+            <Link to="/" textDecoration="none">
+              <Text size={600} color={Colors.tealBase} paddingRight={2}>
+                Light
+              </Text>
+              <Strong size={600} color={Colors.tealDark}>
+                Shop
+              </Strong>
+            </Link>
+          </Pane>
+          <Pane>
+            <CartButton />
+          </Pane>
+        </Pane>
       </NavBar>
     </HeaderContainer>
   );
