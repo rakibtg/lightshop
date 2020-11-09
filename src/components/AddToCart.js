@@ -9,13 +9,12 @@ const AddToCart = () => {
     shallowEqual
   );
 
-  const { quantity } = selectedOption || { quantity: 0 };
+  const { quantity = 0, color = null } = selectedOption || {};
   const cartItems = useSelector((state) => state.cart.items, shallowEqual);
   const selectedTotalQuantity = cartItems
     .filter(
       (cartItem) =>
-        cartItem.productId === product.id &&
-        cartItem.color === selectedOption.color
+        cartItem.productId === product.id && cartItem.color === color
     )
     .reduce((p, c) => p + c.quantity, 0);
   const availableQuantity = quantity - selectedTotalQuantity;
