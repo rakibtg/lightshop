@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { setActiveProductRequirements } from "../store/Actions";
 
-const QuantitySelector = ({ quantity, value = "", updateOptionsValue }) => {
+const QuantitySelector = ({ quantity, value = "" }) => {
   const dispatch = useDispatch();
   const options = new Array(quantity).fill(0);
   const handleQuantityChange = (event) => {
@@ -21,7 +21,7 @@ const QuantitySelector = ({ quantity, value = "", updateOptionsValue }) => {
           width={130}
           onChange={handleQuantityChange}
           value={value}
-          disabled={value <= 0}
+          disabled={value <= 0 || quantity <= 0}
         >
           {options.map((option, index) => {
             const optionValue = index + 1;
@@ -31,7 +31,7 @@ const QuantitySelector = ({ quantity, value = "", updateOptionsValue }) => {
               </option>
             );
           })}
-          {value <= 0 && <option>Out of stock</option>}
+          {(value <= 0 || quantity <= 0) && <option>Out of stock</option>}
         </Select>
       </>
     </DataCell>
