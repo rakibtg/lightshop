@@ -5,6 +5,7 @@ const Colors = {
   white: "#fff",
   blueBase: "#1070CA",
   redBase: "#EC4C47",
+  greenBase: "#47B881",
 };
 
 export default Colors;
