@@ -4,7 +4,7 @@ import { useSelector, shallowEqual, useDispatch } from "react-redux";
 
 import {
   setSelectedOption,
-  setActiveProductRequirements,
+  updateProductViewSelection,
 } from "../store/Actions";
 
 import ColorSelector from "./ColorSelector";
@@ -13,7 +13,7 @@ import QuantitySelector from "./QuantitySelector";
 
 const ProductOptions = ({ options }) => {
   const dispatch = useDispatch();
-  const { selections, selectedOption } = useSelector(
+  const { selections, selectedOption, product } = useSelector(
     (state) => state.productView,
     shallowEqual
   );
@@ -23,7 +23,7 @@ const ProductOptions = ({ options }) => {
       const inStock = options.find((op) => op.quantity > 0);
       const _option = inStock ? inStock : options[0];
       dispatch(
-        setActiveProductRequirements({
+        updateProductViewSelection({
           ..._option,
           quantity: _option.quantity > 1 ? 1 : _option.quantity,
         })
@@ -63,8 +63,10 @@ const ProductOptions = ({ options }) => {
 
       {selectedOption.hasOwnProperty("quantity") && (
         <QuantitySelector
-          quantity={selectedOption.quantity}
+          maxQuantity={selectedOption.quantity}
           value={selections.quantity}
+          id={product.id}
+          color={selections.color}
         />
       )}
     </Pane>

@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 import {
   setSelectedOption,
-  setActiveProductRequirements,
+  updateProductViewSelection,
 } from "../store/Actions";
 
 const ColorSelector = ({ options, value }) => {
@@ -15,7 +15,7 @@ const ColorSelector = ({ options, value }) => {
     const selectedColor = event.target.value.toLowerCase();
     const selectedOption = options.find((op) => op.color === selectedColor);
     dispatch(
-      setActiveProductRequirements({
+      updateProductViewSelection({
         ...selectedOption,
         quantity: selectedOption.quantity > 1 ? 1 : selectedOption.quantity,
       })

@@ -2,13 +2,13 @@ import { Select } from "evergreen-ui";
 import DataCell from "../components/DataCell";
 import { useDispatch } from "react-redux";
 
-import { setActiveProductRequirements } from "../store/Actions";
+import { updateProductViewSelection } from "../store/Actions";
 
 const GenericOptionSelector = ({ label, value = "", updatable, options }) => {
   const dispatch = useDispatch();
   const handleGenericOptionChange = (event) => {
     dispatch(
-      setActiveProductRequirements({
+      updateProductViewSelection({
         [updatable]: Number(event.target.value),
       })
     );

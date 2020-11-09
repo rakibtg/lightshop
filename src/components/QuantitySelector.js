@@ -1,21 +1,22 @@
 import { Select } from "evergreen-ui";
 import DataCell from "../components/DataCell";
-import { setActiveProductRequirements } from "../store/Actions";
+import { updateProductViewSelection } from "../store/Actions";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 
-const QuantitySelector = ({ id, color, quantity, value = "" }) => {
+const QuantitySelector = ({ id, color, maxQuantity, value = "" }) => {
   const dispatch = useDispatch();
-
+  console.log("quantity", maxQuantity);
+  console.log("value", value);
   const cartItems = useSelector((state) => state.cart.items, shallowEqual);
   const selectedTotalQuantity = cartItems
     .filter((cartItem) => cartItem.productId === id && cartItem.color === color)
     .reduce((p, c) => p + c.quantity, 0);
-  const availableQuantity = quantity - selectedTotalQuantity;
+  const availableQuantity = Math.max(0, maxQuantity - selectedTotalQuantity);
   const options = new Array(availableQuantity).fill(0);
 
   const handleQuantityChange = (event) => {
     dispatch(
-      setActiveProductRequirements({
+      updateProductViewSelection({
         quantity: Number(event.target.value),
       })
     );
