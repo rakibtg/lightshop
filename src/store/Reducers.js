@@ -23,10 +23,10 @@ export const cartReducer = (state = {}, action) => {
   const { type, payload } = action;
 
   if (type === "ADD_TO_CART") {
-    const { id, price, order } = payload;
-    for (const orderKey in order) {
-      if (typeof order[orderKey] === "undefined") {
-        delete order[orderKey];
+    const { id, price, selectedOptions } = payload;
+    for (const optionKey in selectedOptions) {
+      if (typeof selectedOptions[optionKey] === "undefined") {
+        delete selectedOptions[optionKey];
       }
     }
 
@@ -34,12 +34,14 @@ export const cartReducer = (state = {}, action) => {
 
     const itemExistsInCartIndex = items.findIndex((cartItem) => {
       if (cartItem.productId === id) {
-        const _order = Object.assign({}, order);
-        delete _order["quantity"];
-        const shouldMerge = Object.keys(_order)
+        const _selectedOption = Object.assign({}, selectedOptions);
+        delete _selectedOption["quantity"];
+        const shouldMerge = Object.keys(_selectedOption)
           .map((orderOptionKey) => {
             if (cartItem.hasOwnProperty(orderOptionKey)) {
-              return cartItem[orderOptionKey] === _order[orderOptionKey];
+              return (
+                cartItem[orderOptionKey] === _selectedOption[orderOptionKey]
+              );
             }
             return false;
           })
@@ -52,7 +54,7 @@ export const cartReducer = (state = {}, action) => {
     if (itemExistsInCartIndex >= 0) {
       // Item with same option found, merge quantity and total.
       const existingItem = items[itemExistsInCartIndex];
-      const newQuantity = existingItem.quantity + order.quantity;
+      const newQuantity = existingItem.quantity + selectedOptions.quantity;
       items[itemExistsInCartIndex] = {
         ...items[itemExistsInCartIndex],
         quantity: newQuantity,
@@ -63,9 +65,8 @@ export const cartReducer = (state = {}, action) => {
       items.push({
         productId: id,
         price,
-        total: price * order.quantity,
-        maxQuantity: order.quantity,
-        ...order,
+        total: price * selectedOptions.quantity,
+        ...selectedOptions,
       });
     }
 
@@ -76,6 +77,48 @@ export const cartReducer = (state = {}, action) => {
       items,
       count,
       subTotal,
+    };
+  } else if (type === "GET_CART_ITEMS") {
+    const { products } = payload;
+    const groupedItems = {};
+    state.items.map((item) => {
+      if (groupedItems.hasOwnProperty(item.productId)) {
+        groupedItems[item.productId] = {
+          ...groupedItems[item.productId],
+          cart: [...groupedItems[item.productId]["cart"], item],
+        };
+      } else {
+        const product = products.find((p) => p.id === item.productId);
+        groupedItems[item.productId] = {
+          ...product,
+          cart: [item],
+        };
+      }
+      return groupedItems;
+    });
+    return {
+      ...state,
+      groupedItems,
+    };
+  } else if (type === "REMOVE_PRODUCT_OPTION_CART") {
+    const { cartItemIndex } = payload;
+    return {
+      ...state,
+      items: state.items.filter((_, index) => index !== cartItemIndex),
+    };
+  } else if (type === "CALCULATE_CART") {
+    return {
+      ...state,
+      subTotal: state.items.reduce((p, c) => p + c.total, 0),
+      count: state.items.reduce((p, c) => p + c.quantity, 0),
+    };
+  } else if (type === "REMOVE_PRODUCT_FROM_CART") {
+    const { id } = payload;
+    const items = state.items.filter((item) => item.productId !== id);
+    console.log("items", items);
+    return {
+      ...state,
+      items,
     };
   }
   return state;
