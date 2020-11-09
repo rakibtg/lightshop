@@ -8,8 +8,17 @@ const AddToCart = () => {
     (state) => state.productView,
     shallowEqual
   );
-  const { available } = product;
+
   const { quantity } = selectedOption || { quantity: 0 };
+  const cartItems = useSelector((state) => state.cart.items, shallowEqual);
+  const selectedTotalQuantity = cartItems
+    .filter(
+      (cartItem) =>
+        cartItem.productId === product.id &&
+        cartItem.color === selectedOption.color
+    )
+    .reduce((p, c) => p + c.quantity, 0);
+  const availableQuantity = quantity - selectedTotalQuantity;
 
   const handleAddToCart = () => {
     const { id, price } = product;
@@ -28,7 +37,7 @@ const AddToCart = () => {
         appearance="primary"
         intent="success"
         fontSize={14}
-        disabled={!available || !quantity}
+        disabled={!product.available || !availableQuantity}
         onClick={handleAddToCart}
       >
         Add to Cart
