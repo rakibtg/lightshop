@@ -1,12 +1,18 @@
 import { Select } from "evergreen-ui";
 import DataCell from "../components/DataCell";
-import { useDispatch } from "react-redux";
-
 import { setActiveProductRequirements } from "../store/Actions";
+import { useSelector, shallowEqual, useDispatch } from "react-redux";
 
-const QuantitySelector = ({ quantity, value = "" }) => {
+const QuantitySelector = ({ id, color, quantity, value = "" }) => {
   const dispatch = useDispatch();
-  const options = new Array(quantity).fill(0);
+
+  const cartItems = useSelector((state) => state.cart.items, shallowEqual);
+  const selectedTotalQuantity = cartItems
+    .filter((cartItem) => cartItem.productId === id && cartItem.color === color)
+    .reduce((p, c) => p + c.quantity, 0);
+  const availableQuantity = quantity - selectedTotalQuantity;
+  const options = new Array(availableQuantity).fill(0);
+
   const handleQuantityChange = (event) => {
     dispatch(
       setActiveProductRequirements({
@@ -14,6 +20,7 @@ const QuantitySelector = ({ quantity, value = "" }) => {
       })
     );
   };
+
   return (
     <DataCell label="Quantity">
       <>
@@ -21,7 +28,7 @@ const QuantitySelector = ({ quantity, value = "" }) => {
           width={130}
           onChange={handleQuantityChange}
           value={value}
-          disabled={value <= 0 || quantity <= 0}
+          disabled={availableQuantity <= 0}
         >
           {options.map((option, index) => {
             const optionValue = index + 1;
@@ -31,7 +38,7 @@ const QuantitySelector = ({ quantity, value = "" }) => {
               </option>
             );
           })}
-          {(value <= 0 || quantity <= 0) && <option>Out of stock</option>}
+          {availableQuantity <= 0 && <option>Out of stock</option>}
         </Select>
       </>
     </DataCell>
