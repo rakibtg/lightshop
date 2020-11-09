@@ -1,8 +1,8 @@
-import CartListItem from "../components/CartListItem";
+import CartItems from "../components/CartItems";
 import { Pane, Text } from "evergreen-ui";
 import { useEffect } from "react";
 import { updateTitle } from "../store/Actions";
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const CheckoutView = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const CheckoutView = () => {
         </Text>
       </Pane>
 
-      <CartListItem />
+      <CartItems />
     </Pane>
   );
 };
