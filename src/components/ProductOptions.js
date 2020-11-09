@@ -55,6 +55,7 @@ const ProductOptions = ({ options }) => {
       {selectedOption.hasOwnProperty("storage") && (
         <GenericOptionSelector
           label="Storage"
+          updatable="storage"
           options={selectedOption.storage}
           value={selections.storage}
         />
