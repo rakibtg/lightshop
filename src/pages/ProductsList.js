@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { updateTitle, getProducts } from "../store/Actions";
 import AllProducts from "../components/AllProducts";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
+import { Pane, Text } from "evergreen-ui";
 
 const ProductsList = () => {
   const dispatch = useDispatch();
@@ -14,11 +15,15 @@ const ProductsList = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <h2>All Products</h2>
+    <Pane>
+      <Pane paddingTop={10} paddingBottom={10}>
+        <Text fontWeight="bold" fontSize={18}>
+          All Products
+        </Text>
+      </Pane>
 
       <AllProducts products={products} />
-    </div>
+    </Pane>
   );
 };
 
