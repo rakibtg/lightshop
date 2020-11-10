@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import configureStore from "redux-mock-store";
+import AddToCart from "../../../components/cart/AddToCart";
 
 const mockStore = configureStore([ReduxThunk]);
 const initialState = {
@@ -55,8 +56,6 @@ const initialState = {
 };
 
 const store = mockStore(initialState);
-
-import AddToCart from "../../../components/cart/AddToCart";
 
 describe("AddToCart component", () => {
   it("Add an item to cart using AddToCart component", async () => {
