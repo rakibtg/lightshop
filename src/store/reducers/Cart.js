@@ -66,12 +66,14 @@ export const cartReducer = (state = {}, action) => {
         count,
         subTotal,
       };
+    /* falls through */
     case ActionTypes.REMOVE_PRODUCT_OPTION_CART:
       const { cartItemIndex } = payload;
       return {
         ...state,
         items: state.items.filter((_, index) => index !== cartItemIndex),
       };
+    /* falls through */
     case ActionTypes.CALCULATE_CART:
       const calculatableItems = state.items.map((item) => ({
         ...item,
@@ -83,6 +85,7 @@ export const cartReducer = (state = {}, action) => {
         subTotal: calculatableItems.reduce((p, c) => p + c.total, 0),
         count: calculatableItems.reduce((p, c) => p + c.quantity, 0),
       };
+    /* falls through */
     case ActionTypes.REMOVE_PRODUCT_FROM_CART:
       const cartItems = state.items.filter(
         (item) => item.productId !== payload.id
@@ -91,6 +94,7 @@ export const cartReducer = (state = {}, action) => {
         ...state,
         items: cartItems,
       };
+    /* falls through */
     case ActionTypes.UPDATE_CART_QUANTITY:
       const items = state.items.map((item) => {
         if (item.productId === payload.id && item.color === payload.color) {
@@ -106,6 +110,7 @@ export const cartReducer = (state = {}, action) => {
         ...state,
         items,
       };
+    /* falls through */
     default:
       return state;
   }

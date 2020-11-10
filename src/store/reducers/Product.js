@@ -5,6 +5,7 @@ export const productReducer = (state = [], action) => {
   switch (action.type) {
     case ActionTypes.GET_PRODUCTS:
       if (!state.length) return DataService();
+    /* falls through */
     default:
       return state;
   }

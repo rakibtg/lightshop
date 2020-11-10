@@ -13,6 +13,7 @@ export const productViewReducer = (state = {}, action) => {
         },
         selectedOption: state.selectedOption || null,
       };
+    /* falls through */
     case ActionTypes.UPDATE_PRODUCT_VIEW_DATA:
       const { product: productUpdatable } = action.payload;
       return {
@@ -22,12 +23,14 @@ export const productViewReducer = (state = {}, action) => {
           (p) => p.color === state.selectedOption.color
         ),
       };
+    /* falls through */
     case ActionTypes.RESET_PRODUCT_VIEW_DATA:
       return {
         product: null,
         selections: ProductViewSelections(),
         selectedOption: null,
       };
+    /* falls through */
     case ActionTypes.SET_SELECTED_OPTION:
       const { option } = action.payload;
       return {

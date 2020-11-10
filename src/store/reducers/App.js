@@ -6,6 +6,7 @@ export const titleReducer = (state = "", action) => {
     case ActionTypes.UPDATE_TITLE:
       BrowserService(action.payload);
       return action.payload;
+    /* falls through */
     default:
       return state;
   }
