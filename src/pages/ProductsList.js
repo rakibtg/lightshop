@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { updateTitle, getProducts } from "../store/Actions";
-import AllProducts from "../components/AllProducts";
+import { updateTitle } from "../store/actions/App";
+import { getProducts } from "../store/actions/Product";
+import AllProducts from "../components/product/AllProducts";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import { Pane, Text } from "evergreen-ui";
 

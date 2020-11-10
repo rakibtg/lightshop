@@ -38,8 +38,6 @@ export const cartReducer = (state = {}, action) => {
         payload.selectedOptions
       );
 
-      console.log("itemExistsInCartIndex", itemExistsInCartIndex);
-
       if (itemExistsInCartIndex >= 0) {
         // Item with same option found, merge quantity and total.
         const existingItem = itemsToAdd[itemExistsInCartIndex];

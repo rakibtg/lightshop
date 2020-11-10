@@ -3,15 +3,15 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import {
-  updateTitle,
   setProductViewData,
   resetProductViewData,
-} from "../store/Actions";
+} from "../store/actions/ProductView";
+import { updateTitle } from "../store/actions/App";
 
 import DataCell from "../components/DataCell";
-import ProductOptions from "../components/ProductOptions";
-import AddToCart from "../components/AddToCart";
-import Availability from "../components/Availability";
+import ProductOptions from "../components/product/ProductOptions";
+import AddToCart from "../components/cart/AddToCart";
+import Availability from "../components/product/Availability";
 
 const ProductView = () => {
   const { id } = useParams();

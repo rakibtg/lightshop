@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Pane, Text } from "evergreen-ui";
-import { updateTitle } from "../store/Actions";
+import { updateTitle } from "../store/actions/App";
 import { useDispatch } from "react-redux";
 
 const Unknown = () => {

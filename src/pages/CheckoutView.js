@@ -1,7 +1,7 @@
-import CartItems from "../components/CartItems";
+import CartItems from "../components/cart/CartItems";
 import { Pane, Text } from "evergreen-ui";
 import { useEffect } from "react";
-import { updateTitle } from "../store/Actions";
+import { updateTitle } from "../store/actions/App";
 import { useDispatch } from "react-redux";
 
 const CheckoutView = () => {
