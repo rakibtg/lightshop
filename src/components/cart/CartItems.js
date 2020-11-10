@@ -1,16 +1,13 @@
 import { useEffect } from "react";
 import { Pane, Text, IconButton, CrossIcon } from "evergreen-ui";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import {
-  getCartItems,
-  getProducts,
-  removeProductFromCart,
-  removeProductOptionFromCart,
-} from "../store/Actions";
-import Link from "../components/Link";
-import DataCell from "../components/DataCell";
-import QuantitySelector from "../components/QuantitySelector";
-import groupProducts from "../helpers/groupProducts";
+import { getProducts } from "../../store/actions/Product";
+import { removeProductFromCart } from "../../store/actions/Cart";
+import { removeProductOptionFromCart } from "../../store/actions/Cart";
+import Link from "../Link";
+import DataCell from "../DataCell";
+import QuantitySelector from "../product/QuantitySelector";
+import groupProducts from "../../helpers/groupProducts";
 
 const CartItems = () => {
   const dispatch = useDispatch();
@@ -102,15 +99,13 @@ const CartItems = () => {
                         <DataCell label="price">${cartItem.price}</DataCell>
                       )}
                       {cartItem.hasOwnProperty("quantity") && (
-                        <DataCell label="quantity">
-                          {cartItem.quantity}
-                          <QuantitySelector
-                            quantity={cartItem.quantity}
-                            value={cartItem.quantity}
-                            id={product.id}
-                            color={cartItem.color}
-                          />
-                        </DataCell>
+                        <QuantitySelector
+                          maxQuantity={cartItem.maxQuantity}
+                          value={cartItem.quantity}
+                          id={product.id}
+                          color={cartItem.color}
+                          inCart={true}
+                        />
                       )}
                       {cartItem.hasOwnProperty("total") && (
                         <DataCell label="total">${cartItem.total}</DataCell>
@@ -126,7 +121,6 @@ const CartItems = () => {
                   );
                 })}
               </Pane>
-              {/* <pre>{JSON.stringify(product, null, 4)}</pre> */}
             </Pane>
           );
         })

@@ -1,6 +1,7 @@
 import { Pane, Button, AddIcon, toaster } from "evergreen-ui";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import { addToCart, updateProductViewData } from "../store/Actions";
+import { updateProductViewData } from "../../store/actions/ProductView";
+import { addToCart } from "../../store/actions/Cart";
 
 const AddToCart = () => {
   const dispatch = useDispatch();

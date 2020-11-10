@@ -1,8 +1,8 @@
 import { Select } from "evergreen-ui";
-import DataCell from "../components/DataCell";
+import DataCell from "../DataCell";
 import { useDispatch } from "react-redux";
 
-import { updateProductViewSelection } from "../store/Actions";
+import { updateProductViewSelection } from "../../store/actions/ProductView";
 
 const GenericOptionSelector = ({ label, value = "", updatable, options }) => {
   const dispatch = useDispatch();

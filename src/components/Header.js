@@ -3,7 +3,7 @@ import { Pane, Text, Strong } from "evergreen-ui";
 
 import Colors from "../constants/Colors";
 import Link from "../components/Link";
-import CartButton from "./CartButton";
+import CartButton from "./cart/CartButton";
 
 const Header = () => {
   return (

@@ -5,7 +5,7 @@ import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import {
   setSelectedOption,
   updateProductViewSelection,
-} from "../store/Actions";
+} from "../../store/actions/ProductView";
 
 import ColorSelector from "./ColorSelector";
 import GenericOptionSelector from "./GenericOptionSelector";

@@ -1,12 +1,12 @@
 import { Select } from "evergreen-ui";
-import DataCell from "../components/DataCell";
-import upperFirst from "../helpers/upperFirst";
+import DataCell from "../DataCell";
+import upperFirst from "../../helpers/upperFirst";
 import { useDispatch } from "react-redux";
 
 import {
   setSelectedOption,
   updateProductViewSelection,
-} from "../store/Actions";
+} from "../../store/actions/ProductView";
 
 const ColorSelector = ({ options, value }) => {
   const dispatch = useDispatch();

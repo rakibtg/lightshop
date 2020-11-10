@@ -2,12 +2,11 @@ import ReduxThunk from "redux-thunk";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 
 import Schema from "./Schema";
-import {
-  titleReducer,
-  productReducer,
-  cartReducer,
-  productViewReducer,
-} from "./Reducers";
+import { titleReducer } from "./reducers/App";
+
+import { cartReducer } from "./reducers/Cart";
+import { productReducer } from "./reducers/Product";
+import { productViewReducer } from "./reducers/ProductView";
 
 const reducers = combineReducers({
   title: titleReducer,
@@ -23,6 +22,7 @@ if (process.env.NODE_ENV === "development") {
   const logger = createLogger({ collapsed: true });
   middlewares.push(logger);
 }
+
 export default createStore(
   (state, action) => reducers(state, action),
   Schema,

@@ -1,6 +1,6 @@
 import { Pane, Text } from "evergreen-ui";
-import Link from "../components/Link";
-import Colors from "../constants/Colors";
+import Link from "../Link";
+import Colors from "../../constants/Colors";
 
 const ProductListItem = ({ product }) => {
   const { id, name, brand, price } = product;

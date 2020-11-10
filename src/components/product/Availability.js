@@ -1,6 +1,6 @@
 import { Pane, Text } from "evergreen-ui";
-import DataCell from "../components/DataCell";
-import Colors from "../constants/Colors";
+import DataCell from "../DataCell";
+import Colors from "../../constants/Colors";
 
 const Availability = ({ status }) => {
   return (

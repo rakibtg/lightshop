@@ -1,6 +1,6 @@
 import { useSelector, shallowEqual } from "react-redux";
 import { Text, Button, ShoppingCartIcon, Badge } from "evergreen-ui";
-import Link from "./Link";
+import Link from "../Link";
 
 const CartButton = () => {
   const cartItemsCount = useSelector((state) => state.cart.count, shallowEqual);
