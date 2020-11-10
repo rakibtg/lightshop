@@ -9,6 +9,8 @@ import DataCell from "../DataCell";
 import QuantitySelector from "../product/QuantitySelector";
 import groupProducts from "../../helpers/groupProducts";
 
+import CartStatistics from "./CartStatistics";
+
 const CartItems = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products, shallowEqual);
@@ -28,108 +30,110 @@ const CartItems = () => {
 
   return (
     <Pane>
-      {cart.items.length && products.length ? (
-        groupProducts(cart.items, products).map((product, index) => {
-          return (
-            <Pane
-              elevation={0}
-              marginBottom={10}
-              hoverElevation={1}
-              background="tint1"
-              key={index}
-            >
+      <Pane>
+        {cart.items.length && products.length ? (
+          groupProducts(cart.items, products).map((product, index) => {
+            return (
               <Pane
-                padding={15}
-                borderBottom="default"
-                display="flex"
-                alignItems="center"
+                elevation={0}
+                marginBottom={10}
+                hoverElevation={1}
+                background="tint1"
+                key={index}
               >
-                <Pane flexGrow={1}>
-                  <Link
-                    to={`/view/${product.id}`}
-                    fontSize={16}
-                    textDecoration="none"
-                    fontWeight="bold"
-                  >
-                    {product.name}
-                  </Link>{" "}
-                  <Text>by {product.brand}</Text>
+                <Pane
+                  padding={15}
+                  borderBottom="default"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Pane flexGrow={1}>
+                    <Link
+                      to={`/view/${product.id}`}
+                      fontSize={16}
+                      textDecoration="none"
+                      fontWeight="bold"
+                    >
+                      {product.name}
+                    </Link>{" "}
+                    <Text>by {product.brand}</Text>
+                  </Pane>
+                  <Pane>
+                    <IconButton
+                      icon={CrossIcon}
+                      height={40}
+                      onClick={() => removeProduct(product.id)}
+                    />
+                  </Pane>
                 </Pane>
                 <Pane>
-                  <IconButton
-                    icon={CrossIcon}
-                    height={40}
-                    onClick={() => removeProduct(product.id)}
-                  />
+                  {product.cart.map((cartItem, cartIndex) => {
+                    return (
+                      <Pane
+                        padding={15}
+                        borderBottom="muted"
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        key={cartIndex}
+                      >
+                        {cartItem.hasOwnProperty("color") && (
+                          <DataCell label="Color">
+                            <Pane display="flex" alignItems="center">
+                              <Pane
+                                width={10}
+                                height={10}
+                                borderRadius={10}
+                                backgroundColor={cartItem.color}
+                                border="default"
+                                marginRight={6}
+                              />
+                              <Text>{cartItem.color}</Text>
+                            </Pane>
+                          </DataCell>
+                        )}
+                        {cartItem.hasOwnProperty("power") && (
+                          <DataCell label="Power">{cartItem.power}</DataCell>
+                        )}
+                        {cartItem.hasOwnProperty("storage") && (
+                          <DataCell label="Storage">
+                            {cartItem.storage}
+                          </DataCell>
+                        )}
+                        {cartItem.hasOwnProperty("price") && (
+                          <DataCell label="price">${cartItem.price}</DataCell>
+                        )}
+                        {cartItem.hasOwnProperty("quantity") && (
+                          <QuantitySelector
+                            maxQuantity={cartItem.maxQuantity}
+                            value={cartItem.quantity}
+                            id={product.id}
+                            color={cartItem.color}
+                            inCart={true}
+                          />
+                        )}
+                        {cartItem.hasOwnProperty("total") && (
+                          <DataCell label="total">${cartItem.total}</DataCell>
+                        )}
+                        <IconButton
+                          icon={CrossIcon}
+                          height={40}
+                          onClick={() =>
+                            removeProductOption(cartItem.cartItemIndex)
+                          }
+                        />
+                      </Pane>
+                    );
+                  })}
                 </Pane>
               </Pane>
-              <Pane>
-                {product.cart.map((cartItem, cartIndex) => {
-                  return (
-                    <Pane
-                      padding={15}
-                      borderBottom="muted"
-                      display="flex"
-                      justifyContent="space-between"
-                      alignItems="center"
-                      key={cartIndex}
-                    >
-                      {cartItem.hasOwnProperty("color") && (
-                        <DataCell label="Color">
-                          <Pane display="flex" alignItems="center">
-                            <Pane
-                              width={10}
-                              height={10}
-                              borderRadius={10}
-                              backgroundColor={cartItem.color}
-                              border="default"
-                              marginRight={6}
-                            />
-                            <Text>{cartItem.color}</Text>
-                          </Pane>
-                        </DataCell>
-                      )}
-                      {cartItem.hasOwnProperty("power") && (
-                        <DataCell label="Power">{cartItem.power}</DataCell>
-                      )}
-                      {cartItem.hasOwnProperty("storage") && (
-                        <DataCell label="Storage">{cartItem.storage}</DataCell>
-                      )}
-                      {cartItem.hasOwnProperty("price") && (
-                        <DataCell label="price">${cartItem.price}</DataCell>
-                      )}
-                      {cartItem.hasOwnProperty("quantity") && (
-                        <QuantitySelector
-                          maxQuantity={cartItem.maxQuantity}
-                          value={cartItem.quantity}
-                          id={product.id}
-                          color={cartItem.color}
-                          inCart={true}
-                        />
-                      )}
-                      {cartItem.hasOwnProperty("total") && (
-                        <DataCell label="total">${cartItem.total}</DataCell>
-                      )}
-                      <IconButton
-                        icon={CrossIcon}
-                        height={40}
-                        onClick={() =>
-                          removeProductOption(cartItem.cartItemIndex)
-                        }
-                      />
-                    </Pane>
-                  );
-                })}
-              </Pane>
-            </Pane>
-          );
-        })
-      ) : (
-        <Text>Please add some item, your cart is empty!</Text>
-      )}
-      <Pane>
-        <Text>Total: {cart.subTotal}</Text>
+            );
+          })
+        ) : (
+          <Text>Please add some item, your cart is empty!</Text>
+        )}
       </Pane>
+      <CartStatistics total={cart.subTotal} />
     </Pane>
   );
 };
