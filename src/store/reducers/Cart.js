@@ -100,7 +100,7 @@ export const cartReducer = (state = {}, action) => {
         if (item.productId === payload.id && item.color === payload.color) {
           return {
             ...item,
-            quantity: payload.payload,
+            quantity: payload.quantity,
           };
         } else {
           return item;
