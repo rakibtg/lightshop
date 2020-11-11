@@ -4,7 +4,7 @@
 
 ## Demo [reactlightshop.netlify.app](https://reactlightshop.netlify.app/)
 
-![Light Shop Demo](lightshop.png)
+![Light Shop Demo](lightshop-optimized.png)
 
 A live demo of this application can be find in the above netlify link.
 
