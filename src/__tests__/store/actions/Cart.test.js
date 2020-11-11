@@ -32,7 +32,7 @@ describe("Cart action creators", () => {
     const expected = [
       {
         type: ActionTypes.UPDATE_CART_QUANTITY,
-        payload: { id: 2, color: "red", quantity: 3 },
+        payload: { id: 2, color: "red", quantity: 3, option: {} },
       },
       { type: ActionTypes.CALCULATE_CART },
     ];

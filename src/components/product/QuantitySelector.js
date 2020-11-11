@@ -10,12 +10,12 @@ const QuantitySelector = ({
   maxQuantity,
   value = "",
   inCart = false,
+  option = {},
 }) => {
   const dispatch = useDispatch();
-
   const handleQuantityChange = (quantity) => {
     if (inCart) {
-      dispatch(updateCartQuantity(id, color, quantity));
+      dispatch(updateCartQuantity(id, color, quantity, option));
     } else {
       dispatch(updateProductViewSelection({ quantity }));
     }

@@ -7,10 +7,12 @@ export const addToCart = (id, price, selectedOptions) => {
   };
 };
 
-export const updateCartQuantity = (id, color, quantity) => (dispatch) => {
+export const updateCartQuantity = (id, color, quantity, option = {}) => (
+  dispatch
+) => {
   dispatch({
     type: ActionTypes.UPDATE_CART_QUANTITY,
-    payload: { id, color, quantity },
+    payload: { id, color, quantity, option },
   });
   dispatch(calculateCart());
 };

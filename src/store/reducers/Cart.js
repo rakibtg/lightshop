@@ -98,9 +98,14 @@ export const cartReducer = (state = {}, action) => {
     case ActionTypes.UPDATE_CART_QUANTITY:
       const items = state.items.map((item) => {
         if (item.productId === payload.id && item.color === payload.color) {
+          let optionQuantity = item.quantity;
+          const { name = undefined, value = undefined } = payload.option;
+          if (name && value) {
+            if (item[name] === value) optionQuantity = payload.quantity;
+          } else optionQuantity = payload.quantity;
           return {
             ...item,
-            quantity: payload.quantity,
+            quantity: optionQuantity,
           };
         } else {
           return item;

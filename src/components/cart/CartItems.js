@@ -68,6 +68,14 @@ const CartItems = () => {
                 </Pane>
                 <Pane>
                   {product.cart.map((cartItem, cartIndex) => {
+                    let option = {};
+                    if (cartItem.hasOwnProperty("power")) {
+                      option.name = "power";
+                      option.value = cartItem.power;
+                    } else if (cartItem.hasOwnProperty("storage")) {
+                      option.name = "storage";
+                      option.value = cartItem.storage;
+                    }
                     return (
                       <Pane
                         padding={15}
@@ -110,6 +118,7 @@ const CartItems = () => {
                             id={product.id}
                             color={cartItem.color}
                             inCart={true}
+                            option={option}
                           />
                         )}
                         {cartItem.hasOwnProperty("total") && (
